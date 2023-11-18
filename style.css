@@ -1,39 +1,46 @@
 body {
-    background-color: lightblue;
-    font-family: 'Arial', sans-serif;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-  }
+  background-color: lightblue;
+  font-family: "Arial", sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
 
-  .jokeContainer {
-    background-color: white;
-    border: 2px solid black;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 20px;
-  }
+.jokeContainer {
+  background-color: white;
+  border: 2px solid black;
+  border-radius: 10px;
+  padding: 20px;
+  margin: 20px;
+}
 
-  .joke {
-    font-size: 2em; /* Adjust the size as needed */
-    margin-bottom: 20px;
-  }
+.joke {
+  font-size: 2em; /* Adjust the size as needed */
+  margin-bottom: 20px;
+}
 
-  button {
-    background-color: #4CAF50; /* Green */
-    color: white;
-    padding: 15px 20px;
-    margin: 5px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-  }
+button {
+  background-color: #4caf50; /* Green */
+  color: white;
+  padding: 15px 20px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
 
-  button:disabled {
-    background-color: #A9A9A9; /* Gray */
-    cursor: not-allowed;
-  }
+button:disabled {
+  background-color: #a9a9a9; /* Gray */
+  cursor: not-allowed;
+}
 
-  button:hover {
-    background-color: #45a049; /* Darker green on hover */
-  }
+button:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+
+#previousJokeButton:disabled,
+#nextJokeButton:disabled {
+  /* Additional styles to make the button visually indicate its disabled state */
+  background-color: lightgray; /* Change the background color for disabled state */
+  cursor: not-allowed; /* Change the cursor to indicate that the button is not clickable */
+}
