@@ -67,7 +67,7 @@ window.addEventListener('load', () => {
         jokeContainer.innerHTML = jokeManager.jokes[jokeManager.jokes.length - 1];
     }
 
-    getJokeButton.addEventListener("click", () => displayJoke(jokeContainer));
+    getJokeButton.addEventListener("click", () => displayJoke(jokeManager, jokeContainer));
     previousJokeButton.addEventListener("click", () => {
         const previousJoke = jokeManager.getPreviousJoke(jokeContainer.innerHTML);
         if (previousJoke !== null) {
