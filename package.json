@@ -1,0 +1,32 @@
+{
+  "name": "dad-joke",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aikithoughts/dad-joke-js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aikithoughts/dad-joke-js/issues"
+  },
+  "homepage": "https://github.com/aikithoughts/dad-joke-js#readme",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-fetch-mock": "^3.0.3",
+    "jsdom": "^22.1.0",
+    "jsdom-global": "^3.0.2"
+  },
+  "dependencies": {
+    "text-decoding": "^1.0.0",
+    "text-encoding": "^0.7.0"
+  }
+}

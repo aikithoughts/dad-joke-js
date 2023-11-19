@@ -34,23 +34,20 @@ class JokeManager {
         const index = this.jokes.indexOf(currentJoke);
         return index < this.jokes.length - 1 ? this.jokes[index + 1] : null;
     }
-}
 
-function enableDisableButtons(jokeManager, currentJoke) {
-    const previousJokeButton = document.getElementById('previousJokeButton');
-    const nextJokeButton = document.getElementById('nextJokeButton');
+    enableDisableButtons(currentJoke, previousButton, nextButton) {
+        previousButton.disabled = this.getPreviousJoke(currentJoke) === null;
+        nextButton.disabled = this.getNextJoke(currentJoke) === null;
+    }
 
-    previousJokeButton.disabled = jokeManager.getPreviousJoke(currentJoke) === null;
-    nextJokeButton.disabled = jokeManager.getNextJoke(currentJoke) === null;
-}
-
-async function displayJoke(jokeManager, jokeDestination) {
-    try {
-        const jokeData = await jokeManager.fetchJoke();
-        jokeDestination.innerHTML = jokeData;
-        enableDisableButtons(jokeManager, jokeData);
-    } catch (error) {
-        console.error('Could not get joke', error);
+    async displayJoke(jokeDestination) {
+        try {
+            const jokeData = await this.fetchJoke();
+            jokeDestination.innerHTML = jokeData;
+            this.enableDisableButtons(jokeData, previousJokeButton, nextJokeButton);
+        } catch (error) {
+            console.error('Could not get joke', error);
+        }
     }
 }
 
@@ -60,26 +57,28 @@ window.addEventListener('load', () => {
     const previousJokeButton = document.getElementById('previousJokeButton');
     const nextJokeButton = document.getElementById('nextJokeButton');
 
-    let jokeManager = new JokeManager();
+    const jokeManager = new JokeManager();
 
     if (jokeManager.jokes.length > 0) {
         previousJokeButton.disabled = false;
         jokeContainer.innerHTML = jokeManager.jokes[jokeManager.jokes.length - 1];
     }
 
-    getJokeButton.addEventListener("click", () => displayJoke(jokeManager, jokeContainer));
+    getJokeButton.addEventListener("click", () => jokeManager.displayJoke(jokeContainer));
     previousJokeButton.addEventListener("click", () => {
         const previousJoke = jokeManager.getPreviousJoke(jokeContainer.innerHTML);
         if (previousJoke !== null) {
             jokeContainer.innerHTML = previousJoke;
-            enableDisableButtons(jokeManager, previousJoke);
+            jokeManager.enableDisableButtons(previousJoke, previousJokeButton, nextJokeButton);
         }
     });
     nextJokeButton.addEventListener("click", () => {
         const nextJoke = jokeManager.getNextJoke(jokeContainer.innerHTML);
         if (nextJoke !== null) {
             jokeContainer.innerHTML = nextJoke;
-            enableDisableButtons(jokeManager, nextJoke);
+            jokeManager.enableDisableButtons(nextJoke, previousJokeButton, nextJokeButton);
         }
     });
 });
+
+module.exports = JokeManager;
