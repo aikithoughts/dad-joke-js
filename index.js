@@ -81,4 +81,11 @@ window.addEventListener('load', () => {
     });
 });
 
-module.exports = JokeManager;
+if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
+    module.exports = { JokeManager };
+}
+
+// For browsers (ES6 modules)
+if (typeof window !== 'undefined') {
+    window.JokeManager = JokeManager;
+}

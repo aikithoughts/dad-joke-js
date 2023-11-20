@@ -1,7 +1,7 @@
 global.TextEncoder = require('text-encoding').TextEncoder;
 global.TextDecoder = require('text-decoding').TextDecoder;
 
-const JokeManager = require('./index');
+const { JokeManager } = require('./index');
 const { JSDOM } = require('jsdom');
 const { document } = new JSDOM(`<!DOCTYPE html>
     <html>
