@@ -88,12 +88,47 @@ describe('JokeManager', () => {
         expect(newJoke).toEqual('Mocked joke');
     });
 
+    test('fetchJoke retries when joke already exists in localStorage', async () => {
+        const jokeManager = new JokeManager();
+        const existingJoke = 'Joke 1';
+        jokeManager.jokes.push(existingJoke);
+        localStorage.setItem('dadJokes', JSON.stringify(jokeManager.jokes));
+    
+        let fetchCallCount = 0;
+    
+        // Mock the fetch function to return the same joke every time
+        global.fetch = jest.fn().mockImplementation(() => {
+            fetchCallCount++;
+            return Promise.resolve({
+                ok: true,
+                json: () => ({ joke: 'Joke 1' }),
+            });
+        });
+    
+        const joke = await jokeManager.fetchJoke();
+    
+        // Check that fetchJoke was called 3 times (initial call + 2 retries)
+        expect(fetchCallCount).toBe(3);
+    
+        // Check that the returned value is null when maximum retries are reached
+        expect(joke).toBeNull();
+    });
+    
+    
+
     test('getPreviousJoke returns the previous joke in the array', () => {
         const jokeManager = new JokeManager();
         const existingJokes = ['Joke1', 'Joke2'];
         jest.spyOn(localStorage, 'getItem').mockReturnValue(JSON.stringify(existingJokes));
         expect(jokeManager.getPreviousJoke('Joke2')).toEqual('Joke1');
     });
+
+    test('findJoke returns true', () => {
+        const jokeManager = new JokeManager();
+        const existingJokes = ['Joke1', 'Joke2'];
+        expect(jokeManager.findJoke('Joke1', existingJokes)).toEqual(true);
+
+    })
 
     test('getNextJoke returns the next joke in the array', () => {
         const jokeManager = new JokeManager();

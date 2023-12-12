@@ -3,27 +3,41 @@ class JokeManager {
         this.jokes = JSON.parse(localStorage.getItem('dadJokes')) || [];
     }
 
-    async fetchJoke() {
+    async fetchJoke(retries = 3) {
         try {
+            if (retries === 0) {
+                throw new Error('Maximum retries reached.');
+            }
+    
             const response = await fetch('https://icanhazdadjoke.com/', {
                 headers: {
                     'Accept': 'application/json'
                 }
             });
-
+    
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
-
+    
             const data = await response.json();
-            this.jokes.push(data.joke);
-            localStorage.setItem('dadJokes', JSON.stringify(this.jokes));
-            return data.joke;
+            if (!this.findJoke(data.joke, this.jokes)) {
+                this.jokes.push(data.joke);
+                localStorage.setItem('dadJokes', JSON.stringify(this.jokes));
+                return data.joke;
+            } else {
+                // Recursive call with reduced number of retries
+                return this.fetchJoke(retries - 1);
+            }
         } catch (error) {
+            // Return a special value when the maximum retries are reached
+            if (error.message === 'Maximum retries reached.') {
+                return null;
+            }
             console.error('Error:', error);
             throw error;
         }
     }
+    
 
     getPreviousJoke(currentJoke) {
         const index = this.jokes.indexOf(currentJoke);
@@ -33,6 +47,10 @@ class JokeManager {
     getNextJoke(currentJoke) {
         const index = this.jokes.indexOf(currentJoke);
         return index < this.jokes.length - 1 ? this.jokes[index + 1] : null;
+    }
+
+    findJoke(joke, jokes) {
+        return jokes.includes(joke);
     }
 
     enableDisableButtons(currentJoke, previousButton, nextButton) {
