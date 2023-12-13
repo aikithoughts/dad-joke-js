@@ -82,6 +82,7 @@ window.addEventListener('load', () => {
         jokeContainer.innerHTML = jokeManager.jokes[jokeManager.jokes.length - 1];
     } else {
         previousJokeButton.disabled = true;
+        jokeContainer.innerHTML = 'Beware. These are not good jokes.';
     }
 
     getJokeButton.addEventListener("click", () => jokeManager.displayJoke(jokeContainer));
