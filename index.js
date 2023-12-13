@@ -77,9 +77,11 @@ window.addEventListener('load', () => {
 
     const jokeManager = new JokeManager();
 
-    if (jokeManager.jokes.length > 0) {
+    if (jokeManager.jokes && jokeManager.jokes.length > 0) {
         previousJokeButton.disabled = false;
         jokeContainer.innerHTML = jokeManager.jokes[jokeManager.jokes.length - 1];
+    } else {
+        previousJokeButton.disabled = true;
     }
 
     getJokeButton.addEventListener("click", () => jokeManager.displayJoke(jokeContainer));
